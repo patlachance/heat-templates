@@ -146,7 +146,7 @@
       "DependsOn" : "msql_db",
       "Properties" : {
         "Handle" : {"Ref" : "MySqlWaitHandle"},
-        "Timeout" : "600"
+        "Timeout" : "1800"
       }
     }
 
