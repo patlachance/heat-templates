@@ -56,6 +56,8 @@ WordPress_Single_Instance_With_EIP.template
 WordPress_Single_Instance_With_EBS_EIP.template
  - Creates a single instance wordpress/mysql server with EIP with full security
    and EBS Volume
+ - PLA: OK, but requires the definition of 'default_floating_pool' in /etc/nova/nova.conf
+        Just configure it to the external network subnet
 
 WordPress_Single_Instance_deb.template
  - Creates a single instance wordpress/mysql server, ubuntu based template
