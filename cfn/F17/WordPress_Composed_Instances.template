@@ -87,7 +87,7 @@
   },
 
   "Resources" : {
-    "DatabaseTemplate": {
+    "DBTemplate": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "TemplateURL": "https://raw.github.com/patlachance/heat-templates/master/cfn/F17/MySQL_Single_Instance.template",
@@ -105,7 +105,7 @@
 
     "WebServer": {
       "Type": "AWS::EC2::Instance",
-      "DependsOn": "DatabaseTemplate",
+      "DependsOn": "DBTemplate",
       "Metadata" : {
         "AWS::CloudFormation::Init" : {
           "config" : {
@@ -133,7 +133,7 @@
           "/opt/aws/bin/cfn-init\n",
           "sed -i \"/Deny from All/d\" /etc/httpd/conf.d/wordpress.conf\n",
           "sed -i \"s/Require local/Require all granted/\" /etc/httpd/conf.d/wordpress.conf\n",
-          "sed --in-place --e s/database_name_here/", { "Ref" : "DBName" }, "/ --e s/username_here/", { "Ref" : "DBUsername" }, "/ --e s/password_here/", { "Ref" : "DBPassword" }, "/ --e s/localhost/", { "Fn::GetAtt" : [ "DatabaseTemplate", "Outputs.PublicIp" ]}, "/ /usr/share/wordpress/wp-config.php\n",
+          "sed --in-place --e s/database_name_here/", { "Ref" : "DBName" }, "/ --e s/username_here/", { "Ref" : "DBUsername" }, "/ --e s/password_here/", { "Ref" : "DBPassword" }, "/ --e s/localhost/", { "Fn::GetAtt" : [ "DBTemplate", "Outputs.PublicIp" ]}, "/ /usr/share/wordpress/wp-config.php\n",
           "systemctl restart httpd.service\n"
         ]]}}
       }
