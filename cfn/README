@@ -58,6 +58,7 @@ WordPress_Single_Instance_With_EBS_EIP.template
    and EBS Volume
  - PLA: OK, but requires the definition of 'default_floating_pool' in /etc/nova/nova.conf
         Just configure it to the external network subnet
+        More info: https://bugs.launchpad.net/heat/+bug/1206865
 
 WordPress_Single_Instance_deb.template
  - Creates a single instance wordpress/mysql server, ubuntu based template
