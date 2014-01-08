@@ -34,7 +34,7 @@ if [ -e "${LIBVIRT_IMGDIR}/${TDLNAME}.dsk" ]; then
     exit_usage "${LIBVIRT_IMGDIR}/${TDLNAME}.dsk already exists, please remove then re-run"
 fi
 
-oz-install -u ${DEBUG} ${TDLFILE} -x ${LIBVIRT_XMLFILE}
+oz-install -t 3600  -u ${DEBUG} ${TDLFILE} -x ${LIBVIRT_XMLFILE}
 
 DSKFILE="${LIBVIRT_IMGDIR}/${TDLNAME}.dsk"
 FMTFILE="${LIBVIRT_IMGDIR}/${TDLNAME}.${DISK_FORMAT}"
