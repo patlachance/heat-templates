@@ -1,0 +1,59 @@
+<template>
+  <name>CentOS-6.5-x86_64-cfntools</name>
+  <os>
+    <name>CentOS-6</name>
+    <version>5</version>
+    <arch>x86_64</arch>
+    <install type='url'>
+      <url>http://mirror.ovh.net/ftp.centos.org/6.5/os/x86_64/</url>
+    </install>
+  </os>
+  <description>CentOS 6.5</description>
+  <commands>
+    <command name='lockroot'> 
+passwd -l root
+    </command>
+    <command name='network-config'>
+cat > /etc/sysconfig/network-scripts/ifcfg-eth0 &lt;&lt; EOF
+DEVICE="eth0"
+BOOTPROTO=dhcp
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+NOZEROCONF="yes"
+EOF
+    </command>
+    <command name='packages'>
+yum -y update
+rpm -Uvh http://mirrors.ircam.fr/pub/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum -y install perl python python-setuptools cloud-init python-pip
+pip-python install argparse boto heat-cfntools
+cfn-create-aws-symlinks --source /usr/bin
+    </command>
+    <command name='post-configuration'>
+useradd -m itisopen
+sed -i 's/user: .*$/user: itisopen/' /etc/cloud/cloud.cfg
+chmod +x /etc/rc.d/rc.local
+chkconfig --level 345 sshd on
+rm -rf /etc/udev/rules.d/70-persistent-net.rules
+cat << EOT > /etc/rc.local
+cat /etc/redhat-release                                                         >  /etc/motd
+uname -a                                                                        >> /etc/motd
+echo                                                                            >> /etc/motd
+
+echo '    ___________          ____                 '                           >> /etc/motd
+echo -n '   /  _/_  __( )_____   / __ \____  ___  ____ '                        >> /etc/motd
+echo "    hostname    : \`hostname\`"                                                 >> /etc/motd
+echo -n '   / /  / /  |// ___/  / / / / __ \/ _ \/ __ \'                        >> /etc/motd
+echo "    ami-id      : \`curl -s http://169.254.169.254/latest/meta-data/ami-id\`"      >> /etc/motd
+echo -n ' _/ /  / /    (__  )  / /_/ / /_/ /  __/ / / /'                        >> /etc/motd
+echo "    public-ipv4 : \`curl -s http://169.254.169.254/latest/meta-data/public-ipv4\`" >> /etc/motd
+echo -n '/___/ /_/    /____/   \____/ .___/\___/_/ /_/ '                        >> /etc/motd
+echo "    local-ipv4  : \`curl -s http://169.254.169.254/latest/meta-data/local-ipv4\`"  >> /etc/motd
+echo 'http://www.itisopen.net   /_/                 '                        >> /etc/motd
+echo                                                                         >> /etc/motd
+
+touch /var/lock/subsys/local
+EOT
+    </command>
+  </commands>
+</template>
