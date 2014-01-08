@@ -43,7 +43,8 @@ qemu-img convert -c -O ${DISK_FORMAT} ${DSKFILE} ${FMTFILE}
 if [ -f ${FMTFILE} ]; then
     echo "Image ${FMTFILE} creation complete."
     echo "Add the image to glance with the command:"
-    GLANCECMD="sudo -E glance add name=${TDLNAME} is_public=true disk_format=${DISK_FORMAT} container_format=bare"
+#    GLANCECMD="sudo -E glance add name=${TDLNAME} is_public=true disk_format=${DISK_FORMAT} container_format=bare"
+    GLANCECMD="glance add name=${TDLNAME} is_public=true disk_format=${DISK_FORMAT} container_format=bare"
     echo "${GLANCECMD} < ${FMTFILE}"
 else
     echo "Error creating image file ${FMTFILE}"
