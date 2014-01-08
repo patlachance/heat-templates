@@ -35,7 +35,7 @@ sed -i 's/user: .*$/user: itisopen/' /etc/cloud/cloud.cfg
 chmod +x /etc/rc.d/rc.local
 chkconfig --level 345 sshd on
 rm -rf /etc/udev/rules.d/70-persistent-net.rules
-cat << EOT > /etc/rc.local
+cat &lt;&lt; EOT > /etc/rc.local
 cat /etc/redhat-release                                                         >  /etc/motd
 uname -a                                                                        >> /etc/motd
 echo                                                                            >> /etc/motd
